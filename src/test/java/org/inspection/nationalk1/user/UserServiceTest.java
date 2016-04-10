@@ -1,8 +1,8 @@
-package com.pky.spring.user;
+package org.inspection.nationalk1.user;
 
-import com.pky.spring.Application;
-import com.pky.spring.domain.User;
-import com.pky.spring.service.IUserService;
+import org.inspection.nationalk1.Application;
+import org.inspection.nationalk1.domain.User;
+import org.inspection.nationalk1.service.IUserService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

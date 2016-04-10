@@ -1,6 +1,6 @@
-package com.pky.spring.service;
+package org.inspection.nationalk1.service;
 
-import com.pky.spring.domain.User;
+import org.inspection.nationalk1.domain.User;
 
 /**
  * Created by Park Kwang Yong(pky1030@gmail.com) on 16. 3. 19..

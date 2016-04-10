@@ -1,4 +1,4 @@
-package com.pky.spring.domain;
+package org.inspection.nationalk1.domain;
 
 import javax.persistence.*;
 

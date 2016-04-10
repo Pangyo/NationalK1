@@ -1,6 +1,6 @@
-package com.pky.spring.repository;
+package org.inspection.nationalk1.repository;
 
-import com.pky.spring.domain.User;
+import org.inspection.nationalk1.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

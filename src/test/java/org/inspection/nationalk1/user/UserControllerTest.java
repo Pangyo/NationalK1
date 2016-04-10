@@ -1,8 +1,8 @@
-package com.pky.spring.user;
+package org.inspection.nationalk1.user;
 
-import com.pky.spring.Application;
-import com.pky.spring.controller.UserController;
-import com.pky.spring.domain.User;
+import org.inspection.nationalk1.Application;
+import org.inspection.nationalk1.controller.UserController;
+import org.inspection.nationalk1.domain.User;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.nio.charset.Charset;
@@ -47,7 +48,7 @@ public class UserControllerTest {
     @Test
     public void testCreate() throws Exception {
 
-        this.mockMvc.perform(post(UserController.URL_USER_CREATE)
+        this.mockMvc.perform(MockMvcRequestBuilders.post(UserController.URL_USER_CREATE)
                 .contentType(contentType)
                 .content(mapper.writeValueAsString(new User("박광용"))))
                 .andExpect(status().isOk())

@@ -1,7 +1,7 @@
-package com.pky.spring.controller;
+package org.inspection.nationalk1.controller;
 
-import com.pky.spring.domain.User;
-import com.pky.spring.service.IUserService;
+import org.inspection.nationalk1.domain.User;
+import org.inspection.nationalk1.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,8 @@ public class UserController {
     private IUserService userService;
 
     @RequestMapping(value = UserController.URL_USER_CREATE, method = RequestMethod.POST)
-    public @ResponseBody User create(@RequestBody final User user){
+    public @ResponseBody
+    User create(@RequestBody final User user){
         userService.save(user);
         return userService.findByName(user.getName());
     }

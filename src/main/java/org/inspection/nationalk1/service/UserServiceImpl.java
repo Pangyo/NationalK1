@@ -1,7 +1,7 @@
-package com.pky.spring.service;
+package org.inspection.nationalk1.service;
 
-import com.pky.spring.domain.User;
-import com.pky.spring.repository.UserRepository;
+import org.inspection.nationalk1.domain.User;
+import org.inspection.nationalk1.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
