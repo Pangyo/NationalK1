@@ -4,6 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
+
 import org.hibernate.annotations.DynamicUpdate;
 import org.inspection.nationalk1.converters.OriginCodeConverter;
 import org.inspection.nationalk1.local.enums.OriginCode;
@@ -17,17 +19,17 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @RequiredArgsConstructor
+@ToString(exclude="congresspersonDetail")
 @Data
 @DynamicUpdate
 public class Congressperson {
 
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "CONGRESSPERSON_ID")
     private Long id;
 
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "CONGRESSPERSON_ID")
+    @OneToOne(mappedBy="congressperson")
     private CongresspersonDetail congresspersonDetail;
 
     @ManyToOne
