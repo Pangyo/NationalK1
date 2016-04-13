@@ -55,6 +55,13 @@ public class CongresspersonDetailTest {
 
 
         congresspersonRepository.save(tempCongresspserson);
+        congresspersonDetail.setName("박광용");
+        congresspersonDetailRepository.save(congresspersonDetail);
+//        tempCongresspserson.getCongresspersonDetail().setName("박공용 ");
+//        congresspersonRepository.save(tempCongresspserson);
+//
+//        tempCongresspserson.getCongresspersonDetail().setName("박공용111 ");
+//        congresspersonRepository.save(tempCongresspserson);
 
 
 //        congresspersonDetailRepository.save(congresspersonDetail);

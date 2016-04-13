@@ -21,7 +21,7 @@ public class CongresspersonDetail {
     private Long congresspersonId;
 
     @MapsId
-//    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
+//  @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.LAZY)
 //    @PrimaryKeyJoinColumn(name = "CONGRESSPERSON_ID", referencedColumnName = "CONGRESSPERSON_ID")
 //    @JoinColumn(name = "CONGRESSPERSON_ID")
     @OneToOne(mappedBy = "congresspersonDetail")
