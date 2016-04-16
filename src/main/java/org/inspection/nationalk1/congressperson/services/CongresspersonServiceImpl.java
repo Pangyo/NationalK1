@@ -38,7 +38,7 @@ public class CongresspersonServiceImpl implements CongresspersonService {
             CongresspersonDetail congresspersonDetail = congressperson.getCongresspersonDetail();
             if(congresspersonDetail.getElectionNum() != null
                 && !congresspersonDetail.getElectionNum().isEmpty()) {
-                for(ElectionNumber electionNumber : congresspersonDetail.getElectionNum()) {
+                for(ElectionNumber electionNumber : congresspersonDetail.getElectionNumberList()) {
                     electionNumberRepository.save(electionNumber);
                 }
             }
@@ -59,7 +59,6 @@ public class CongresspersonServiceImpl implements CongresspersonService {
     @Override
     public void updateAllCongresspersonFromPublicDataApi() {
         String xmlData = restApiUtils.getExcute("public.data.curr.member");
-        System.out.println(xmlData);
         XmlMapper xmlMapper = new XmlMapper();
         try {
             PublicApiResponse<Congressperson> response = xmlMapper.readValue(xmlData, new TypeReference<PublicApiResponse<Congressperson>>(){});
@@ -78,7 +77,6 @@ public class CongresspersonServiceImpl implements CongresspersonService {
                    }else {
                        congresspersonRepository.save(congressperson);
                    }
-                   System.out.println(congressperson.toString());
                }
             }
         } catch (IOException e) {

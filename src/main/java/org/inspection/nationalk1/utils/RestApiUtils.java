@@ -5,8 +5,10 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.PostConstruct;
+
 import java.io.IOException;
 import java.util.Map;
 import java.util.Properties;
@@ -23,7 +26,7 @@ import java.util.Properties;
  */
 @Component
 public class RestApiUtils {
-    private HttpClient httpClient;
+    private CloseableHttpClient httpClient;
     private RestTemplate restTemplate;
     @Autowired @Qualifier(value = "propertiesFactory") private Properties propertiesFactory;
 
@@ -48,11 +51,11 @@ public class RestApiUtils {
         String url = domain + expand(propertiesFactory.getProperty(key), paramMap);
         HttpUriRequest request = new HttpGet(url);
         try {
-            HttpResponse response = httpClient.execute(request);
+        	CloseableHttpResponse response = httpClient.execute(request);
             if(response.getStatusLine().getStatusCode() == HttpStatus.SC_OK) {
                 if(response.getEntity() != null) {
                     String result =  IOUtils.toString(response.getEntity().getContent());
-                    System.out.println(result);
+                    response.close();
                     return result;
                 }
             }

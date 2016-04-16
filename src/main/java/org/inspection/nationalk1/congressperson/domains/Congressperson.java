@@ -51,7 +51,6 @@ public class Congressperson {
     @Column(nullable = true) // 재선 - 코드
     private ReelectionCode reelectionCode;
 
-    private String reeleGbnNm;
 
     @OneToOne(mappedBy="congressperson")
     private CongresspersonDetail congresspersonDetail;
@@ -67,7 +66,11 @@ public class Congressperson {
     // 지역 - 코드
     private OriginCode originCode;
 
+    //API 결과 값을 위한 field
+    @Transient
     private String origNm;
+    @Transient
+    private String reeleGbnNm;
 
     public Congressperson setReeleGbnNm(String value) {
         this.reelectionCode = new ReelectionCodeConverter().convertToEntityAttribute(value);

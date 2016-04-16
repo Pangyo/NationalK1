@@ -82,7 +82,7 @@ public class CongresspersonServiceTest {
         List<ElectionNumber> electionNumberList = new ArrayList<ElectionNumber>();
         electionNumberList.add(electionNumber);
 
-        congresspersonDetail.setElectionNum(electionNumberList);
+        congresspersonDetail.setElectionNumberList(electionNumberList);
         Congressperson congressperson = new Congressperson().setOriginCode(OriginCode.DAEGU).setPoly(poly);
         congressperson.setCongresspersonDetail(congresspersonDetail);
 
