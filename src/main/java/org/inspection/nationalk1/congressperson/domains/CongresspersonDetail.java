@@ -1,6 +1,7 @@
 package org.inspection.nationalk1.congressperson.domains;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 
@@ -12,7 +13,9 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 @NoArgsConstructor
 @Data
+@Accessors(chain = true)
 @ToString(exclude="congressperson")
+@EqualsAndHashCode(exclude="congressperson")
 public class CongresspersonDetail {
 	
 	@Id

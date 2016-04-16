@@ -1,11 +1,8 @@
 package org.inspection.nationalk1.congressperson.domains;
 
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
+import lombok.experimental.Accessors;
 import org.hibernate.annotations.DynamicUpdate;
 import org.inspection.nationalk1.converters.OriginCodeConverter;
 import org.inspection.nationalk1.local.enums.OriginCode;
@@ -20,8 +17,10 @@ import javax.persistence.*;
 @Table(name = "congressperson")
 @NoArgsConstructor
 @RequiredArgsConstructor
-@ToString(exclude="congresspersonDetail")
+@ToString(exclude={"congresspersonDetail", "poly"})
+@EqualsAndHashCode(exclude={"congresspersonDetail", "poly"})
 @Data
+@Accessors(chain = true)
 @DynamicUpdate
 public class Congressperson {
 
@@ -42,8 +41,8 @@ public class Congressperson {
     private OriginCode originCode;
 
     public void setCongresspersonDetail(CongresspersonDetail congresspersonDetail){
-//        this.congresspersonDetail = congresspersonDetail;
-        congresspersonDetail.setCongressperson(this);
+        this.congresspersonDetail = congresspersonDetail;
+//        congresspersonDetail.setCongressperson(this);
     }
 
 
