@@ -12,4 +12,6 @@ public interface CongresspersonService {
     public Long save(Congressperson congressperson);
     public Congressperson getCongresspersonById(Long congresspersonId);
 
+    public void updateAllCongresspersonFromPublicDataApi();
+
 }

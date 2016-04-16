@@ -3,6 +3,7 @@ package org.inspection.nationalk1.congressperson.services;
 import org.inspection.nationalk1.Application;
 import org.inspection.nationalk1.congressperson.domains.Congressperson;
 import org.inspection.nationalk1.congressperson.domains.CongresspersonDetail;
+import org.inspection.nationalk1.congressperson.domains.ElectionNumber;
 import org.inspection.nationalk1.local.enums.OriginCode;
 import org.inspection.nationalk1.poly.domains.Poly;
 import org.inspection.nationalk1.poly.repositories.PolyRepository;
@@ -15,7 +16,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import static junit.framework.TestCase.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static junit.framework.TestCase.assertEquals;
 
 /**
  * Created by Park Kwang Yong(pky1030@gmail.com) on 16. 4. 16..
@@ -27,7 +31,7 @@ public class CongresspersonServiceTest {
 
     @Autowired private CongresspersonService congresspersonService;
     @Autowired private PolyRepository polyRepository;
-
+//    @Autowired private ElectionNumberRepository electionNumberRepository;
 
     @Transactional
 
@@ -63,5 +67,30 @@ public class CongresspersonServiceTest {
         congresspersonDetail.setName("정귀영");
 
 
+    }
+
+    @Transactional
+    @Rollback(false)
+    @Test
+    public void congresspersonElectionNumberTest(){
+
+        ElectionNumber electionNumber = new ElectionNumber(1L);
+
+        Poly poly = new Poly(10000L, "새누리당");
+        polyRepository.save(poly);
+        CongresspersonDetail congresspersonDetail = new CongresspersonDetail().setName("김무성");
+        List<ElectionNumber> electionNumberList = new ArrayList<ElectionNumber>();
+        electionNumberList.add(electionNumber);
+
+        congresspersonDetail.setElectionNum(electionNumberList);
+        Congressperson congressperson = new Congressperson().setOriginCode(OriginCode.DAEGU).setPoly(poly);
+        congressperson.setCongresspersonDetail(congresspersonDetail);
+
+        Long savedCongresspersonId = congresspersonService.save(congressperson);
+    }
+
+    @Test
+    public void getXmlDataFromPublicApiTest() {
+        congresspersonService.updateAllCongresspersonFromPublicDataApi();
     }
 }

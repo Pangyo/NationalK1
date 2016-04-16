@@ -22,4 +22,14 @@ public class OriginCodeConverter implements AttributeConverter<OriginCode, Strin
         }
         return null;
     }
+
+    public OriginCode convertToEntityAttributeByLocalName(String localName) {
+        OriginCode[] originCodes = OriginCode.values();
+        for (OriginCode originCode: originCodes) {
+            if (originCode.getName().equals(localName)) {
+                return originCode;
+            }
+        }
+        return OriginCode.OTHER;
+    }
 }
