@@ -17,6 +17,7 @@ import javax.persistence.*;
  * Created by Park Kwang Yong(pky1030@gmail.com) on 16. 4. 11..
  */
 @Entity
+@Table(name = "congressperson")
 @NoArgsConstructor
 @RequiredArgsConstructor
 @ToString(exclude="congresspersonDetail")
@@ -25,15 +26,14 @@ import javax.persistence.*;
 public class Congressperson {
 
     @Id @GeneratedValue(strategy=GenerationType.AUTO)
-    @Column(name = "CONGRESSPERSON_ID")
-    private Long id;
-
+    @Column
+    private Long congresspersonId;
 
     @OneToOne(mappedBy="congressperson")
     private CongresspersonDetail congresspersonDetail;
 
     @ManyToOne
-    @JoinColumn(name = "POLY_CD")
+    @JoinColumn(name = "poly_cd")
     @NonNull
     private Poly poly;
 
@@ -42,7 +42,7 @@ public class Congressperson {
     private OriginCode originCode;
 
     public void setCongresspersonDetail(CongresspersonDetail congresspersonDetail){
-        this.congresspersonDetail = congresspersonDetail;
+//        this.congresspersonDetail = congresspersonDetail;
         congresspersonDetail.setCongressperson(this);
     }
 

@@ -18,10 +18,10 @@ import javax.persistence.Id;
 public class Poly {
 
     @Id
-    @Column(name = "POLY_CD")
+    @Column
     private Long polyCd;
 
-    @Column(name = "POLY_NM")
+    @Column
     private String polyNm;
 
 }

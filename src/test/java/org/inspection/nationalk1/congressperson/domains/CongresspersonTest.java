@@ -40,7 +40,7 @@ public class CongresspersonTest {
     public void test1(){
         Congressperson congressperson = new Congressperson(tempPoly, OriginCode.BUSAN);
         congresspersonRepository.save(congressperson);
-        assertThat(congressperson.getId(), is(notNullValue()));
+        assertThat(congressperson.getCongresspersonId(), is(notNullValue()));
     }
 
 
