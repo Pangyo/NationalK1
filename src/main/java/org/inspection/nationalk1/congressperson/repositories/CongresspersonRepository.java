@@ -1,6 +1,9 @@
 package org.inspection.nationalk1.congressperson.repositories;
 
+import java.util.List;
+
 import org.inspection.nationalk1.congressperson.domains.Congressperson;
+import org.inspection.nationalk1.poly.domains.Poly;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -8,5 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CongresspersonRepository extends JpaRepository<Congressperson, Long> {
 	
-	public Congressperson findBydeptCd(String deptCd);
+	public Congressperson findByDeptCd(String deptCd);
+	public List<Congressperson> findByPoly(Poly poly);
 }

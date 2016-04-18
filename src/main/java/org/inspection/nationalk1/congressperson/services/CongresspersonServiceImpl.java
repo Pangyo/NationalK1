@@ -10,6 +10,8 @@ import org.inspection.nationalk1.congressperson.domains.ElectionNumber;
 import org.inspection.nationalk1.congressperson.repositories.CongresspersonDetailRepository;
 import org.inspection.nationalk1.congressperson.repositories.CongresspersonRepository;
 import org.inspection.nationalk1.congressperson.repositories.ElectionNumberRepository;
+import org.inspection.nationalk1.poly.domains.Poly;
+import org.inspection.nationalk1.poly.repositories.PolyRepository;
 import org.inspection.nationalk1.utils.NullSafeUtils;
 import org.inspection.nationalk1.utils.RestApiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,7 @@ public class CongresspersonServiceImpl implements CongresspersonService {
 
     @Autowired private CongresspersonRepository congresspersonRepository;
     @Autowired private CongresspersonDetailRepository congressPersonDetailRepository;
+    @Autowired private PolyRepository polyRepository;
     @Autowired private ElectionNumberRepository electionNumberRepository;
     @Autowired private RestApiUtils restApiUtils;
 
@@ -55,7 +58,7 @@ public class CongresspersonServiceImpl implements CongresspersonService {
 
     
     @Override
-	public List<Congressperson> getAllCongressperson() {
+	public List<Congressperson> getAllCongresspersons() {
     	return congresspersonRepository.findAll();
 	}
 
@@ -67,7 +70,13 @@ public class CongresspersonServiceImpl implements CongresspersonService {
     
     @Override
 	public Congressperson getCongresspersonByDeptCd(String deptCd) {
-    	return congresspersonRepository.findBydeptCd(deptCd);
+    	return congresspersonRepository.findByDeptCd(deptCd);
+	}
+
+	@Override
+	public List<Congressperson> getCongresspersonsByPolyCd(Long polyCd) {
+		Poly poly = polyRepository.findOne(polyCd);
+		return congresspersonRepository.findByPoly(poly);
 	}
 
 	@Transactional

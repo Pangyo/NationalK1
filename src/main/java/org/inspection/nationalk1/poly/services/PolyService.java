@@ -14,8 +14,8 @@ public interface PolyService {
 
 	public Long save(Poly poly);
     public Poly getPolyById(Long polyCd);
-    public List<Poly> getAllPoly();
+    public List<Poly> getAllPolies();
     
-    public void updateAllPolyFromPublicDataApi();
-    public void updateAllPolyInCongressperson();
+    public void updateAllPoliesFromPublicDataApi();
+    public void updateAllPoliesInCongressperson();
 }

@@ -12,9 +12,10 @@ import org.springframework.stereotype.Service;
 public interface CongresspersonService {
 
     public Long save(Congressperson congressperson);
-    public List<Congressperson> getAllCongressperson();
+    public List<Congressperson> getAllCongresspersons();
     public Congressperson getCongresspersonById(Long congresspersonId);
     public Congressperson getCongresspersonByDeptCd(String deptCd);
+    public List<Congressperson> getCongresspersonsByPolyCd(Long deptCd);
 
     public void updateAllCongresspersonFromPublicDataApi();
 

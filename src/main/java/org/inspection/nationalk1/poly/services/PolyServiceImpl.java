@@ -44,13 +44,13 @@ public class PolyServiceImpl implements PolyService {
 	}
 	
 	@Override
-	public List<Poly> getAllPoly() {
+	public List<Poly> getAllPolies() {
 		return polyRepository.findAll();
 	}
 
 	@Transactional
 	@Override
-	public void updateAllPolyFromPublicDataApi() {
+	public void updateAllPoliesFromPublicDataApi() {
 		String xmlData = restApiUtils.getExcute("public.data.curr.poly");
         XmlMapper xmlMapper = new XmlMapper();
         try {
@@ -68,7 +68,7 @@ public class PolyServiceImpl implements PolyService {
 
 	@Transactional
 	@Override
-	public void updateAllPolyInCongressperson() {
+	public void updateAllPoliesInCongressperson() {
 		XmlMapper xmlMapper = new XmlMapper();
 		List<Poly> polyList = polyRepository.findAll();
 		
@@ -82,7 +82,7 @@ public class PolyServiceImpl implements PolyService {
 				if(response.isSuccessful()) {
 					List<Congressperson> congresspersonList = response.getBody().getItems();
 					for(Congressperson congressperson : congresspersonList) {
-						Congressperson selectedCongressperson = congresspersonRepository.findBydeptCd(congressperson.getDeptCd());
+						Congressperson selectedCongressperson = congresspersonRepository.findByDeptCd(congressperson.getDeptCd());
 						if(selectedCongressperson != null) {
 							selectedCongressperson.setPoly(poly);
 						}

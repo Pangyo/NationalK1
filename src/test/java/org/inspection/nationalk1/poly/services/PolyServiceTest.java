@@ -8,6 +8,7 @@ import org.inspection.nationalk1.congressperson.services.CongresspersonService;
 import org.inspection.nationalk1.local.enums.OriginCode;
 import org.inspection.nationalk1.poly.domains.Poly;
 import org.inspection.nationalk1.poly.repositories.PolyRepository;
+import org.inspection.nationalk1.utils.NullSafeUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,25 +43,36 @@ public class PolyServiceTest {
         Poly selectedPoly = polyService.getPolyById(id);
         assertEquals(poly, selectedPoly);
     }
-
+    
     @Transactional
     @Rollback(false)
     @Test
     public void getXmlDataFromPublicApiTest() {
-        polyService.updateAllPolyFromPublicDataApi();
+        polyService.updateAllPoliesFromPublicDataApi();
     }
     
     @Transactional
     @Rollback(false)
     @Test
     public void updateAllPolyInCongresspersonTest() {
-    	if(congresspersonService.getAllCongressperson().isEmpty()) {
+    	if(congresspersonService.getAllCongresspersons().isEmpty()) {
     		congresspersonService.updateAllCongresspersonFromPublicDataApi();
     	}
-    	if(polyService.getAllPoly().isEmpty()) {
-    		polyService.updateAllPolyFromPublicDataApi();
+    	if(polyService.getAllPolies().isEmpty()) {
+    		polyService.updateAllPoliesFromPublicDataApi();
     	}
-    	polyService.updateAllPolyInCongressperson();
+    	polyService.updateAllPoliesInCongressperson();
+    	
+    	List<Congressperson> allCongresspersonList = congresspersonService.getAllCongresspersons();
+    	int congresspersonCount = allCongresspersonList.size();
+    	int sumOfcongresspersonCountEachPoly = 0;
+    	List<Poly> allPolyList = polyService.getAllPolies();
+    	for(Poly poly : NullSafeUtils.list(allPolyList)) {
+    		sumOfcongresspersonCountEachPoly += congresspersonService.getCongresspersonsByPolyCd(poly.getPolyCd()).size();
+    	}
+    	
+    	assertEquals(congresspersonCount, sumOfcongresspersonCountEachPoly);
+    	
     }
     
     
