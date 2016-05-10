@@ -1,6 +1,7 @@
 package org.inspection.nationalk1.congressperson.services;
 
 import com.fasterxml.jackson.xml.XmlMapper;
+
 import org.codehaus.jackson.type.TypeReference;
 import org.inspection.nationalk1.common.domain.PublicApiResponse;
 import org.inspection.nationalk1.congressperson.domains.Congressperson;
@@ -9,6 +10,9 @@ import org.inspection.nationalk1.congressperson.domains.ElectionNumber;
 import org.inspection.nationalk1.congressperson.repositories.CongresspersonDetailRepository;
 import org.inspection.nationalk1.congressperson.repositories.CongresspersonRepository;
 import org.inspection.nationalk1.congressperson.repositories.ElectionNumberRepository;
+import org.inspection.nationalk1.poly.domains.Poly;
+import org.inspection.nationalk1.poly.repositories.PolyRepository;
+import org.inspection.nationalk1.utils.NullSafeUtils;
 import org.inspection.nationalk1.utils.RestApiUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +31,7 @@ public class CongresspersonServiceImpl implements CongresspersonService {
 
     @Autowired private CongresspersonRepository congresspersonRepository;
     @Autowired private CongresspersonDetailRepository congressPersonDetailRepository;
+    @Autowired private PolyRepository polyRepository;
     @Autowired private ElectionNumberRepository electionNumberRepository;
     @Autowired private RestApiUtils restApiUtils;
 
@@ -51,11 +56,30 @@ public class CongresspersonServiceImpl implements CongresspersonService {
         return congressperson.getCongresspersonId();
     }
 
+    
     @Override
+	public List<Congressperson> getAllCongresspersons() {
+    	return congresspersonRepository.findAll();
+	}
+
+
+	@Override
     public Congressperson getCongresspersonById(Long congresspersonId) {
         return congresspersonRepository.findOne(congresspersonId);
     }
+    
+    @Override
+	public Congressperson getCongresspersonByDeptCd(String deptCd) {
+    	return congresspersonRepository.findByDeptCd(deptCd);
+	}
 
+	@Override
+	public List<Congressperson> getCongresspersonsByPolyCd(Long polyCd) {
+		Poly poly = polyRepository.findOne(polyCd);
+		return congresspersonRepository.findByPoly(poly);
+	}
+
+	@Transactional
     @Override
     public void updateAllCongresspersonFromPublicDataApi() {
         String xmlData = restApiUtils.getExcute("public.data.curr.member");
@@ -64,20 +88,20 @@ public class CongresspersonServiceImpl implements CongresspersonService {
             PublicApiResponse<Congressperson> response = xmlMapper.readValue(xmlData, new TypeReference<PublicApiResponse<Congressperson>>(){});
             if(response.isSuccessful()) {
                List<Congressperson> congresspersonList = response.getBody().getItems();
-               for(Congressperson congressperson : congresspersonList) {
-                   Map<String, String> paramMap = new HashMap<String, String>();
-                   paramMap.put("deptcd", congressperson.getDeptCd());
-                   String detailXmlData = restApiUtils.getExcute("public.data.detail.member", paramMap);
-
-                   PublicApiResponse<CongresspersonDetail> detailResponse = xmlMapper.readValue(detailXmlData, new TypeReference<PublicApiResponse<CongresspersonDetail>>(){});
-                   if(detailResponse.isSuccessful()) {
-                       CongresspersonDetail congresspersonDetail = detailResponse.getBody().getItem();
-                       congresspersonDetail.setCongressperson(congressperson);
-                       congressPersonDetailRepository.save(congresspersonDetail);
-                   }else {
-                       congresspersonRepository.save(congressperson);
-                   }
-               }
+        	   for(Congressperson congressperson : NullSafeUtils.list(congresspersonList)) {
+        		   Map<String, String> paramMap = new HashMap<String, String>();
+        		   paramMap.put("deptcd", congressperson.getDeptCd());
+        		   String detailXmlData = restApiUtils.getExcute("public.data.detail.member", paramMap);
+        		   
+        		   PublicApiResponse<CongresspersonDetail> detailResponse = xmlMapper.readValue(detailXmlData, new TypeReference<PublicApiResponse<CongresspersonDetail>>(){});
+        		   if(detailResponse.isSuccessful()) {
+        			   CongresspersonDetail congresspersonDetail = detailResponse.getBody().getItem();
+        			   congresspersonDetail.setCongressperson(congressperson);
+        			   congressPersonDetailRepository.save(congresspersonDetail);
+        		   }else {
+        			   congresspersonRepository.save(congressperson);
+        		   }
+        	   }
             }
         } catch (IOException e) {
             e.printStackTrace();
